@@ -53,7 +53,7 @@ namespace App2Android
             if (isLoadedGame == false)
             {
                 this.InitializeGame();
-            }
+            }           
 
             this.ExecuteEpizode(this.Game.CurrentEpizode);
         }
@@ -66,37 +66,79 @@ namespace App2Android
                 return;
             }
 
-            if (this.isLoadedGame == false)
-            {
-                this.AddRemoveItems(epizode);
+            var layout = new LinearLayout(this);
+            layout.Orientation = Orientation.Vertical;
 
-                this.AddRemoveStats(epizode);
-            }
+            var stats = new LinearLayout(this);
+            stats.Orientation = Orientation.Horizontal;
+
+            var scrollView = new ScrollView(this);
+
+
+            var aLabel = new TextView(this);
+            //aLabel.
+            aLabel.Text = epizode.ID + "\n" + epizode.Text;
+
+            var aButton = new Button(this);
+            aButton.Text = "Say Hello!";
+
+            //aButton.Click += (sender, e) =>
+            //{ aLabel.Text = "Hello Android!"; };          
+
+            //if (this.isLoadedGame == false)
+            //{
+            //    this.AddRemoveItems(epizode);
+
+            //    this.AddRemoveStats(epizode);
+            //}
+
+            //this.Game.CurrentEpizode = EpizodeNumber;
+
+            ////this.ShowStats();
+            ////this.GetGrid();
+
+            //this.PrepareText(epizode);
+
+            //if (CheckIfDead())
+            //{
+            //    var choice = new Decision();
+            //    choice.Text = "Продължи";
+            //    choice.GoTo = 1001;
+            //    this.CreateButton(choice);
+            //}
+            //else
+            //{
+            //    this.PrepareChoices(epizode);
+            //}
+
+            //this.isLoadedGame = false;
+
+            //this.RefreshStats();
+
+            //this.SaveGame("Autosave.xml");
+            var vl = new LinearLayout(this);
+            vl.Orientation = Orientation.Vertical;
+
+            vl.AddView(aLabel);
+            vl.AddView(aButton);
+            scrollView.AddView(vl);            
+
+            //LinearLayout stack;
+            //var scrollview = new ScrollView
+            //{
+            //    Content = new StackLayout
+            //    {
+            //        Padding = new Thickness(20),
+            //    },
+            //};
+
+            //for (var i = 0; i < 100; i++)
+            //    stack.Children.Add(new Button { Text = "Foo" });
 
 
 
-            this.Game.CurrentEpizode = EpizodeNumber;
-
-            this.PrepareText(epizode);
-
-            if (CheckIfDead())
-            {
-                var choice = new Decision();
-                choice.Text = "Продължи";
-                choice.GoTo = 1001;
-                this.CreateButton(choice);
-            }
-            else
-            {
-                this.PrepareChoices(epizode);
-            }
-
-            this.isLoadedGame = false;
-
-            this.RefreshStats();
-
-            this.SaveGame("Autosave.xml");
-
+            layout.AddView(scrollView);            
+            SetContentView(layout);
         }
 
         private bool CheckIfDead()
@@ -109,6 +151,8 @@ namespace App2Android
                     return true;
                 }
             }
+            
+            return true;
             return false;
         }
 
@@ -495,15 +539,15 @@ namespace App2Android
 
         private bool LoadGame(string file)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(SaveGameData));
-            if (System.IO.File.Exists(file) == true)
-            {
-                FileStream fs = new FileStream(file, FileMode.Open);
-                this.Game = (SaveGameData)serializer.Deserialize(fs);
-                fs.Close();
-                this.isLoadedGame = true;
-                return true;
-            }
+            //XmlSerializer serializer = new XmlSerializer(typeof(SaveGameData));
+            //if (System.IO.File.Exists(file) == true)
+            //{
+            //    FileStream fs = new FileStream(file, FileMode.Open);
+            //    this.Game = (SaveGameData)serializer.Deserialize(fs);
+            //    fs.Close();
+            //    this.isLoadedGame = true;
+            //    return true;
+            //}
             return false;
         }
 
