@@ -1,0 +1,4 @@
+App2Android.MainActivity, App2Android;md5cb978e1ca384ccdfcbb5d29ee5ecc48c.MainActivity
+App2Android.MainActivity, App2Android, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5cb978e1ca384ccdfcbb5d29ee5ecc48c.MainActivity
+App2Android.MainActivity;md5cb978e1ca384ccdfcbb5d29ee5ecc48c.MainActivity
+app2android.MainActivity;md5cb978e1ca384ccdfcbb5d29ee5ecc48c.MainActivity

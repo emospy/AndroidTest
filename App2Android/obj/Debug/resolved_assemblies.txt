@@ -1,0 +1,7 @@
+D:\WorkEmo\a2d\Step1\App2Android\App2Android\obj\Debug\assemblies\App2Android.dll
+D:\WorkEmo\a2d\Step1\App2Android\App2Android\obj\Debug\assemblies\Mono.Android.dll
+D:\WorkEmo\a2d\Step1\App2Android\App2Android\obj\Debug\assemblies\mscorlib.dll
+D:\WorkEmo\a2d\Step1\App2Android\App2Android\obj\Debug\assemblies\System.Core.dll
+D:\WorkEmo\a2d\Step1\App2Android\App2Android\obj\Debug\assemblies\System.dll
+D:\WorkEmo\a2d\Step1\App2Android\App2Android\obj\Debug\assemblies\System.Xml.dll
+D:\WorkEmo\a2d\Step1\App2Android\App2Android\obj\Debug\assemblies\System.Xml.Linq.dll

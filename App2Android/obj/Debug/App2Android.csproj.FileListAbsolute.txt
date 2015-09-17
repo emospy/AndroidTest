@@ -1,0 +1,13 @@
+D:\WorkEmo\a2d\Step1\App2Android\App2Android\bin\Debug\App2Android.dll
+D:\WorkEmo\a2d\Step1\App2Android\App2Android\bin\Debug\App2Android.pdb
+D:\WorkEmo\a2d\Step1\App2Android\App2Android\bin\Debug\App2Android.App2Android.apk
+D:\WorkEmo\a2d\Step1\App2Android\App2Android\bin\Debug\App2Android.App2Android-Signed.apk
+D:\WorkEmo\a2d\Step1\App2Android\App2Android\obj\Debug\App2Android.csprojResolveAssemblyReference.cache
+D:\WorkEmo\a2d\Step1\App2Android\App2Android\obj\Debug\App2Android.dll
+D:\WorkEmo\a2d\Step1\App2Android\App2Android\obj\Debug\App2Android.pdb
+D:\WorkEmo\a2d\Step1\App2Android\App2Android\obj\Debug\android\bin\App2Android.App2Android.apk
+D:\WorkEmo\a2d\Step1\App2Android\App2Android\obj\Debug\res\layout\main.xml
+D:\WorkEmo\a2d\Step1\App2Android\App2Android\obj\Debug\res\values\strings.xml
+D:\WorkEmo\a2d\Step1\App2Android\App2Android\obj\Debug\res\drawable\icon.png
+D:\WorkEmo\a2d\Step1\App2Android\App2Android\obj\Debug\R.cs.flag
+D:\WorkEmo\a2d\Step1\App2Android\App2Android\obj\Debug\uploadflags.txt
