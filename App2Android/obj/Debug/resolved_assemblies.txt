@@ -1,7 +1,7 @@
-C:\Users\Emo\Documents\GitHub\AndroidTest\App2Android\obj\Debug\assemblies\App2Android.dll
-C:\Users\Emo\Documents\GitHub\AndroidTest\App2Android\obj\Debug\assemblies\Mono.Android.dll
-C:\Users\Emo\Documents\GitHub\AndroidTest\App2Android\obj\Debug\assemblies\mscorlib.dll
-C:\Users\Emo\Documents\GitHub\AndroidTest\App2Android\obj\Debug\assemblies\System.Core.dll
-C:\Users\Emo\Documents\GitHub\AndroidTest\App2Android\obj\Debug\assemblies\System.dll
-C:\Users\Emo\Documents\GitHub\AndroidTest\App2Android\obj\Debug\assemblies\System.Xml.dll
-C:\Users\Emo\Documents\GitHub\AndroidTest\App2Android\obj\Debug\assemblies\System.Xml.Linq.dll
+D:\Contacts\GitHub\AndroidTest\App2Android\obj\Debug\assemblies\App2Android.dll
+D:\Contacts\GitHub\AndroidTest\App2Android\obj\Debug\assemblies\Mono.Android.dll
+D:\Contacts\GitHub\AndroidTest\App2Android\obj\Debug\assemblies\mscorlib.dll
+D:\Contacts\GitHub\AndroidTest\App2Android\obj\Debug\assemblies\System.Core.dll
+D:\Contacts\GitHub\AndroidTest\App2Android\obj\Debug\assemblies\System.dll
+D:\Contacts\GitHub\AndroidTest\App2Android\obj\Debug\assemblies\System.Xml.dll
+D:\Contacts\GitHub\AndroidTest\App2Android\obj\Debug\assemblies\System.Xml.Linq.dll

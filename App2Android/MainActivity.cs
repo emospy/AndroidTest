@@ -74,14 +74,12 @@ namespace App2Android
 
             Bitmap bitmap;
 
-
             var documentsFolder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
 
             //Create a folder for the images if not exists
             System.IO.Directory.CreateDirectory(System.IO.Path.Combine(documentsFolder, "images"));
 
             string imatge = System.IO.Path.Combine(documentsFolder, "images", "image.jpg");
-
 
             System.IO.File.WriteAllBytes(imatge, bytes.Concat(new Byte[] { (byte)0xD9 }).ToArray());
 
@@ -90,7 +88,6 @@ namespace App2Android
             System.IO.File.Delete(imatge);
 
             return bitmap;
-
         }
 
         internal static string Decrypt(string encryptedText, string encryptionPassword)
@@ -147,44 +144,43 @@ namespace App2Android
                 return;
             }
 
-            var bmp = this.bytesToUIImage(epizode.image);
-
+            /////TEst section
             //var layout = new LinearLayout(this);
             //layout.Orientation = Orientation.Vertical;
 
-            LinearLayout layout = FindViewById<LinearLayout>(Resource.Layout.Main);
+            //LinearLayout layout = FindViewById<LinearLayout>(Resource.Layout.Main);
 
-            var stats = new LinearLayout(this);
-            stats.Orientation = Orientation.Horizontal;
+            //var stats = new LinearLayout(this);
+            //stats.Orientation = Orientation.Horizontal;
 
-            var scrollView = new ScrollView(this);
+            //var scrollView = new ScrollView(this);
 
-            var aLabel = new TextView(this);
-            //aLabel.
-            aLabel.Text = epizode.ID + "\n" + epizode.Text;
+            //var aLabel = new TextView(this);
+            ////aLabel.
+            //aLabel.Text = epizode.ID + "\n" + epizode.Text;
 
-            var aButton = new Button(this);
-            aButton.Text = "Say Hello!";
+            //var aButton = new Button(this);
+            //aButton.Text = "Say Hello!";
 
-            ImageView ivue = new ImageView(this);
-            ivue.SetImageBitmap(bmp);
-            ivue.LayoutParameters = new LinearLayout.LayoutParams( ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
+            //ImageView ivue = new ImageView(this);
+            //ivue.SetImageBitmap(bmp);
+            //ivue.LayoutParameters = new LinearLayout.LayoutParams( ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
 
 
             //aButton.Click += (sender, e) =>
             //{ aLabel.Text = "Hello Android!"; };          
 
-            //if (this.isLoadedGame == false)
-            //{
-            //    this.AddRemoveItems(epizode);
+            /////End of test section
 
-            //    this.AddRemoveStats(epizode);
-            //}
+            if (this.isLoadedGame == false)
+            {
+                this.AddRemoveItems(epizode);
+                this.AddRemoveStats(epizode);
+            }
 
-            //this.Game.CurrentEpizode = EpizodeNumber;
+            this.Game.CurrentEpizode = EpizodeNumber;
 
-            ////this.ShowStats();
-            ////this.GetGrid();
+            this.PrepareImage(epizode);
 
             //this.PrepareText(epizode);
 
@@ -204,13 +200,7 @@ namespace App2Android
 
             //this.RefreshStats();
 
-            //this.SaveGame("Autosave.xml");
-            var vl = new LinearLayout(this);
-            vl.Orientation = Orientation.Vertical;
-            vl.AddView(ivue);
-            vl.AddView(aLabel);
-            vl.AddView(aButton);
-            scrollView.AddView(vl);            
+            //this.SaveGame("Autosave.xml");           
 
             //LinearLayout stack;
             //var scrollview = new ScrollView
@@ -223,11 +213,15 @@ namespace App2Android
 
             //for (var i = 0; i < 100; i++)
             //    stack.Children.Add(new Button { Text = "Foo" });
+        }
 
+        private void PrepareImage(EpizodeXML epizode)
+        {
+            var bmp = this.bytesToUIImage(epizode.image);
 
-
-            layout.AddView(scrollView);            
-            SetContentView(layout);
+            ImageView ivue = FindViewById<ImageView>(Resource.Id.imageView);
+            ivue.SetImageBitmap(bmp);
+            ivue.LayoutParameters = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
         }
 
         private bool CheckIfDead()
