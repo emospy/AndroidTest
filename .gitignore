@@ -211,3 +211,17 @@ App2Android/obj/Debug/uploadflags.txt
 App2Android/obj/Debug/assemblies/App2Android.dll
 App2Android/obj/Debug/App2Android.pdb
 App2Android/obj/Debug/App2Android.dll
+App2Android/obj/Debug/android/bin/classes/app2android/app2android/R.class
+App2Android/obj/Debug/android/bin/classes/app2android/app2android/R.class
+App2Android/obj/Debug/android/bin/classes/mono/MonoPackageManager.class
+App2Android/obj/Debug/android/bin/classes/mono/MonoPackageManager_Resources.class
+App2Android/obj/Debug/android/bin/packaged_resources
+App2Android/obj/Debug/android/bin/resources_and_assemblies
+App2Android/obj/Debug/android/src/app2android/app2android/R.java
+App2Android/obj/Debug/android/src/mono/MonoPackageManager.java
+App2Android/obj/Debug/assemblies/App2Android.dll.mdb
+App2Android/obj/Debug/assemblies/Mono.Android.dll
+App2Android/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+App2Android/obj/Debug/res/layout/main.xml
+App2Android/obj/Debug/resolved_assemblies.txt
+App2Android/Resources/layout/Main.axml
