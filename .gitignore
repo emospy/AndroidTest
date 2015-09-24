@@ -196,3 +196,18 @@ FakesAssemblies/
 *.opt
 
 GameGenerator/Patrol.docx
+App2Android/bin/Debug/App2Android.App2Android-Signed.apk
+App2Android/bin/Debug/App2Android.App2Android-Signed.apk
+App2Android/bin/Debug/App2Android.dll
+App2Android/bin/Debug/App2Android.dll.mdb
+App2Android/bin/Debug/App2Android.pdb
+App2Android/obj/Debug/android/app2android/app2android/R.java
+App2Android/obj/Debug/android/bin/App2Android.App2Android.apk
+App2Android/obj/Debug/android/bin/classes.dex
+App2Android/obj/Debug/android/bin/classes/app2android/app2android/R$id.class
+App2Android/obj/Debug/android/bin/classes/app2android/app2android/R$layout.class
+App2Android/obj/Debug/android/bin/classes/app2android/app2android/R$string.class
+App2Android/obj/Debug/uploadflags.txt
+App2Android/obj/Debug/assemblies/App2Android.dll
+App2Android/obj/Debug/App2Android.pdb
+App2Android/obj/Debug/App2Android.dll

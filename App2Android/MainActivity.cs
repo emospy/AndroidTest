@@ -182,7 +182,7 @@ namespace App2Android
 
             this.PrepareImage(epizode);
 
-            //this.PrepareText(epizode);
+            this.PrepareText(epizode);
 
             //if (CheckIfDead())
             //{
@@ -217,11 +217,18 @@ namespace App2Android
 
         private void PrepareImage(EpizodeXML epizode)
         {
+            if (epizode.image == null)
+            {
+                return;
+            }
             var bmp = this.bytesToUIImage(epizode.image);
 
             ImageView ivue = FindViewById<ImageView>(Resource.Id.imageView);
             ivue.SetImageBitmap(bmp);
-            ivue.LayoutParameters = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
+
+            var metrics = Resources.DisplayMetrics;
+
+            var w = metrics.WidthPixels;
         }
 
         private bool CheckIfDead()
@@ -556,14 +563,7 @@ namespace App2Android
 
         private void PrepareText(EpizodeXML epizode)
         {
-            ////var EpizodeContents = new FlowDocumentScrollViewer();
-            //var Flowdoc = new FlowDocument();
-            //Paragraph para = new Paragraph();
-            //para.Inlines.Add(epizode.ID + "\n" + epizode.Text);
-            //Flowdoc.Blocks.Add(para);
-            ////this.txtEpizodeContents = new FlowDocumentScrollViewer();
-            //this.txtEpizodeContents.Document = Flowdoc;
-            ////this.txtEpizodeContents
+            
         }
 
         private void PrepareBattle(EpizodeXML epizode)
