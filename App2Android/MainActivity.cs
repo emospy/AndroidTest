@@ -145,8 +145,7 @@ namespace App2Android
             }
 
             /////TEst section
-            //var layout = new LinearLayout(this);
-            //layout.Orientation = Orientation.Vertical;
+            
 
             //LinearLayout layout = FindViewById<LinearLayout>(Resource.Layout.Main);
 
@@ -180,42 +179,38 @@ namespace App2Android
 
             this.Game.CurrentEpizode = EpizodeNumber;
 
-            this.PrepareImage(epizode);
+            var layout = new LinearLayout(this);
+            layout.Orientation = Orientation.Vertical;
 
-            this.PrepareText(epizode);
+            this.PrepareImage(epizode, layout);
 
-            //if (CheckIfDead())
-            //{
-            //    var choice = new Decision();
-            //    choice.Text = "Продължи";
-            //    choice.GoTo = 1001;
-            //    this.CreateButton(choice);
-            //}
-            //else
-            //{
-            //    this.PrepareChoices(epizode);
-            //}
+            this.PrepareText(epizode, layout);
 
-            //this.isLoadedGame = false;
+            if (CheckIfDead())
+            {
+                var choice = new Decision();
+                choice.Text = "Продължи";
+                choice.GoTo = 1001;
+                this.CreateButton(choice, layout);
+            }
+            else
+            {
+                this.PrepareChoices(epizode, layout);
+            }
 
-            //this.RefreshStats();
+            this.isLoadedGame = false;
+
+            this.RefreshStats();
+
+            ScrollView scroll = FindViewById<ScrollView>(Resource.Id.scrollView);
+            scroll.RemoveAllViews();
+            scroll.AddView(layout);
 
             //this.SaveGame("Autosave.xml");           
 
-            //LinearLayout stack;
-            //var scrollview = new ScrollView
-            //{
-            //    Content = new StackLayout
-            //    {
-            //        Padding = new Thickness(20),
-            //    },
-            //};
-
-            //for (var i = 0; i < 100; i++)
-            //    stack.Children.Add(new Button { Text = "Foo" });
         }
 
-        private void PrepareImage(EpizodeXML epizode)
+        private void PrepareImage(EpizodeXML epizode, LinearLayout lay)
         {
             if (epizode.image == null)
             {
@@ -223,12 +218,9 @@ namespace App2Android
             }
             var bmp = this.bytesToUIImage(epizode.image);
 
-            ImageView ivue = FindViewById<ImageView>(Resource.Id.imageView);
+            ImageView ivue = new ImageView(this);
             ivue.SetImageBitmap(bmp);
-
-            var metrics = Resources.DisplayMetrics;
-
-            var w = metrics.WidthPixels;
+            lay.AddView(ivue);
         }
 
         private bool CheckIfDead()
@@ -242,7 +234,6 @@ namespace App2Android
                 }
             }
             
-            return true;
             return false;
         }
 
@@ -268,13 +259,19 @@ namespace App2Android
 
         private void RefreshStats()
         {
-            //this.spStats.Children.Clear();
+            TextView txtStats = FindViewById<TextView>(Resource.Id.textViewStats);
 
-            //foreach (var s in this.Game.lstStats)
-            //{
-            //    this.spStats.Children.Add(new Label { Content = s.Name });
-            //    this.spStats.Children.Add(new Label { Content = s.Value });
-            //}
+            string txt = "";
+
+            foreach (var s in this.Game.lstStats)
+            {
+                txt += s.Name;
+                txt += " ";
+                txt += s.Value;
+                txt += " ";
+            }
+
+            txtStats.Text = txt;
         }
 
         private void ResetStat(string name, int qty)
@@ -384,18 +381,18 @@ namespace App2Android
             }
         }
 
-        private void PrepareChoices(EpizodeXML epizode)
+        private void PrepareChoices(EpizodeXML epizode, LinearLayout lay)
         {
             //this.spButtons.Children.Clear();
 
-            this.PrepareDecisions(epizode);
-            this.PrepareChances(epizode);
-            this.PrepareBattle(epizode);
-            this.PrepareInventory(epizode);
-            this.PrepareConditions(epizode);
+            this.PrepareDecisions(epizode, lay);
+            this.PrepareChances(epizode, lay);
+            //this.PrepareBattle(epizode);
+            //this.PrepareInventory(epizode);
+            //this.PrepareConditions(epizode, lay);
         }
 
-        private void PrepareConditions(EpizodeXML epizode)
+        private void PrepareConditions(EpizodeXML epizode, LinearLayout lay)
         {
             var conditions = epizode.Choices.Conditions;
             foreach (var cond in conditions)
@@ -433,13 +430,13 @@ namespace App2Android
                 }
                 if (pass)
                 {
-                    this.CreateButton(cond);
+                    this.CreateButton(cond, lay);
                     break;
                 }
             }
         }
 
-        private void PrepareInventory(EpizodeXML epizode)
+        private void PrepareInventory(EpizodeXML epizode, LinearLayout lay)
         {
             var InventoryConditions = epizode.Choices.InventoryConditions;
             foreach (var invent in InventoryConditions)
@@ -456,7 +453,7 @@ namespace App2Android
                     {
                         if (inv.Quantity >= qty)
                         {
-                            this.CreateButton(invent);
+                            this.CreateButton(invent, lay);
                         }
                     }
                 }
@@ -465,13 +462,13 @@ namespace App2Android
                     var inv = this.Game.lstInventory.Find(i => i.Name == name);
                     if (inv == null || inv.Quantity == 0)
                     {
-                        this.CreateButton(invent);
+                        this.CreateButton(invent, lay);
                     }
                 }
             }
         }
 
-        private void PrepareChances(EpizodeXML epizode)
+        private void PrepareChances(EpizodeXML epizode, LinearLayout lay)
         {
             if (epizode.Choices != null)
             {
@@ -487,14 +484,14 @@ namespace App2Android
                     tillNow += chance.Probability;//double.Parse(chance.Attribute(Probability).Value, System.Globalization.NumberStyles.AllowDecimalPoint);
                     if (r < tillNow)
                     {
-                        this.CreateButton(chance);
+                        this.CreateButton(chance, lay);
                         break;
                     }
                 }
             }
         }
 
-        private void CreateBattleButton(Battle battle)
+        private void CreateBattleButton(Battle battle, LinearLayout lay)
         {
             //Button btn = new Button();
             //btn.Click += this.Click;
@@ -540,38 +537,42 @@ namespace App2Android
             //this.spButtons.Children.Add(btn);
         }
 
-        private void CreateButton(Decision chance)
+        private void CreateButton(Decision chance, LinearLayout lay)
         {
-            //Button btn = new Button();
-            //btn.Click += this.Click;
-            //btn.Content = chance.Text;
-            //btn.Tag = chance.GoTo;
-            //this.spButtons.Children.Add(btn);
+            
+            Button btn = new Button(this);
+            btn.Click += this.Click;
+            btn.Text = chance.Text;
+            btn.Tag = chance.GoTo;
+            lay.AddView(btn);
         }
 
-        private void PrepareDecisions(EpizodeXML epizode)
+        private void PrepareDecisions(EpizodeXML epizode, LinearLayout lay)
         {
             if (epizode.Choices != null)
             {
                 var choices = epizode.Choices.Decisions;
                 foreach (var choice in choices)
                 {
-                    this.CreateButton(choice);
+                    this.CreateButton(choice, lay);
                 }
             }
         }
 
-        private void PrepareText(EpizodeXML epizode)
+        private void PrepareText(EpizodeXML epizode, LinearLayout lay)
         {
-            
+            TextView ivue = new TextView(this);
+            ivue.Text = epizode.Text;
+            ivue.SetTextSize(Android.Util.ComplexUnitType.Dip, 24);
+            lay.AddView(ivue);
         }
 
-        private void PrepareBattle(EpizodeXML epizode)
+        private void PrepareBattle(EpizodeXML epizode, LinearLayout lay)
         {
             var choices = epizode.Choices.Battles;
             foreach (var choice in choices)
             {
-                this.CreateBattleButton(choice);
+                this.CreateBattleButton(choice, lay);
             }
         }
 
