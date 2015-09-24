@@ -42,6 +42,7 @@ namespace App2Android
         public List<Skill> Skills;
         public List<Stat> Stats;
         public Choices Choices;
+        public byte[] image;
     }
 
     [Serializable]

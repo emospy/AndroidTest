@@ -24,3 +24,16 @@ D:\Contacts\GitHub\AndroidTest\App2Android\obj\Debug\res\values\strings.xml
 D:\Contacts\GitHub\AndroidTest\App2Android\obj\Debug\res\drawable\icon.png
 D:\Contacts\GitHub\AndroidTest\App2Android\obj\Debug\R.cs.flag
 D:\Contacts\GitHub\AndroidTest\App2Android\obj\Debug\uploadflags.txt
+C:\Users\Emo\Documents\GitHub\AndroidTest\App2Android\bin\Debug\App2Android.dll
+C:\Users\Emo\Documents\GitHub\AndroidTest\App2Android\bin\Debug\App2Android.pdb
+C:\Users\Emo\Documents\GitHub\AndroidTest\App2Android\bin\Debug\App2Android.App2Android.apk
+C:\Users\Emo\Documents\GitHub\AndroidTest\App2Android\bin\Debug\App2Android.App2Android-Signed.apk
+C:\Users\Emo\Documents\GitHub\AndroidTest\App2Android\obj\Debug\App2Android.csprojResolveAssemblyReference.cache
+C:\Users\Emo\Documents\GitHub\AndroidTest\App2Android\obj\Debug\App2Android.dll
+C:\Users\Emo\Documents\GitHub\AndroidTest\App2Android\obj\Debug\App2Android.pdb
+C:\Users\Emo\Documents\GitHub\AndroidTest\App2Android\obj\Debug\android\bin\App2Android.App2Android.apk
+C:\Users\Emo\Documents\GitHub\AndroidTest\App2Android\obj\Debug\res\layout\main.xml
+C:\Users\Emo\Documents\GitHub\AndroidTest\App2Android\obj\Debug\res\values\strings.xml
+C:\Users\Emo\Documents\GitHub\AndroidTest\App2Android\obj\Debug\res\drawable\icon.png
+C:\Users\Emo\Documents\GitHub\AndroidTest\App2Android\obj\Debug\R.cs.flag
+C:\Users\Emo\Documents\GitHub\AndroidTest\App2Android\obj\Debug\uploadflags.txt

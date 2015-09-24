@@ -10,12 +10,20 @@ using System.Xml.Serialization;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Javax.Crypto;
+using Javax.Crypto.Spec;
+using System.Text;
+using System.Security.Cryptography;
+using Android.Graphics;
 
 namespace App2Android
 {
     [Activity(Label = "App2Android", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
+
+        private static readonly byte[] salt = Encoding.ASCII.GetBytes("Xamarin.iOS Version: 7.0.6.168");
+
         int count = 1;
 
         #region XML Constants
@@ -40,7 +48,7 @@ namespace App2Android
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
 
-            XmlSerializer serializer = new XmlSerializer(typeof(Game));
+            XmlSerializer serializer = new XmlSerializer(typeof(Game)); 
 
             var sr = new StreamReader(Assets.Open("game.xml"));
             this.GameSource = (Game)serializer.Deserialize(sr);
@@ -58,6 +66,79 @@ namespace App2Android
             this.ExecuteEpizode(this.Game.CurrentEpizode);
         }
 
+        public Bitmap bytesToUIImage(byte[] bytes)
+        {
+
+            if (bytes == null)
+                return null;
+
+            Bitmap bitmap;
+
+
+            var documentsFolder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+
+            //Create a folder for the images if not exists
+            System.IO.Directory.CreateDirectory(System.IO.Path.Combine(documentsFolder, "images"));
+
+            string imatge = System.IO.Path.Combine(documentsFolder, "images", "image.jpg");
+
+
+            System.IO.File.WriteAllBytes(imatge, bytes.Concat(new Byte[] { (byte)0xD9 }).ToArray());
+
+            bitmap = BitmapFactory.DecodeFile(imatge);
+
+            System.IO.File.Delete(imatge);
+
+            return bitmap;
+
+        }
+
+        internal static string Decrypt(string encryptedText, string encryptionPassword)
+        {
+            var algorithm = GetAlgorithm(encryptionPassword);
+
+            //Anything to process?
+            if (encryptedText == null || encryptedText == "") return "";
+
+            byte[] descryptedBytes;
+            using (ICryptoTransform decryptor = algorithm.CreateDecryptor(algorithm.Key, algorithm.IV))
+            {
+                byte[] encryptedBytes = Convert.FromBase64String(encryptedText);
+                descryptedBytes = InMemoryCrypt(encryptedBytes, decryptor);
+            }
+            return Encoding.UTF8.GetString(descryptedBytes);
+        }
+
+        private static byte[] InMemoryCrypt(byte[] data, ICryptoTransform transform)
+        {
+            MemoryStream memory = new MemoryStream();
+            using (Stream stream = new CryptoStream(memory, transform, CryptoStreamMode.Write))
+            {
+                stream.Write(data, 0, data.Length);
+            }
+            return memory.ToArray();
+        }
+
+        /// <summary>
+        /// Defines a RijndaelManaged algorithm and sets its key and Initialization Vector (IV) 
+        /// values based on the encryptionPassword received.
+        /// </summary>
+        /// <returns>The algorithm.</returns>
+        /// <param name="encryptionPassword">Encryption password.</param>
+        private static RijndaelManaged GetAlgorithm(string encryptionPassword)
+        {
+            // Create an encryption key from the encryptionPassword and salt.
+            var key = new Rfc2898DeriveBytes(encryptionPassword, salt);
+
+            // Declare that we are going to use the Rijndael algorithm with the key that we've just got.
+            var algorithm = new RijndaelManaged();
+            int bytesForKey = algorithm.KeySize / 8;
+            int bytesForIV = algorithm.BlockSize / 8;
+            algorithm.Key = key.GetBytes(bytesForKey);
+            algorithm.IV = key.GetBytes(bytesForIV);
+            return algorithm;
+        }
+
         private void ExecuteEpizode(int EpizodeNumber)
         {
             var epizode = GetEpizode(EpizodeNumber);
@@ -65,6 +146,8 @@ namespace App2Android
             {
                 return;
             }
+
+            var bmp = this.bytesToUIImage(epizode.image);
 
             var layout = new LinearLayout(this);
             layout.Orientation = Orientation.Vertical;
@@ -74,13 +157,17 @@ namespace App2Android
 
             var scrollView = new ScrollView(this);
 
-
             var aLabel = new TextView(this);
             //aLabel.
             aLabel.Text = epizode.ID + "\n" + epizode.Text;
 
             var aButton = new Button(this);
             aButton.Text = "Say Hello!";
+
+            ImageView ivue = new ImageView(this);
+            ivue.SetImageBitmap(bmp);
+            ivue.LayoutParameters = new LinearLayout.LayoutParams( ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
+
 
             //aButton.Click += (sender, e) =>
             //{ aLabel.Text = "Hello Android!"; };          
@@ -118,7 +205,7 @@ namespace App2Android
             //this.SaveGame("Autosave.xml");
             var vl = new LinearLayout(this);
             vl.Orientation = Orientation.Vertical;
-
+            vl.AddView(ivue);
             vl.AddView(aLabel);
             vl.AddView(aButton);
             scrollView.AddView(vl);            
