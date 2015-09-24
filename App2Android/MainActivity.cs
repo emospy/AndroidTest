@@ -149,8 +149,10 @@ namespace App2Android
 
             var bmp = this.bytesToUIImage(epizode.image);
 
-            var layout = new LinearLayout(this);
-            layout.Orientation = Orientation.Vertical;
+            //var layout = new LinearLayout(this);
+            //layout.Orientation = Orientation.Vertical;
+
+            LinearLayout layout = FindViewById<LinearLayout>(Resource.Layout.Main);
 
             var stats = new LinearLayout(this);
             stats.Orientation = Orientation.Horizontal;
