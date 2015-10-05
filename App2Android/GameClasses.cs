@@ -135,6 +135,10 @@ namespace App2Android
         public List<Predicate> Predicates;
     }
 
+    public class ChanceRollBack : Condition
+    {
+    }
+
     public class ItemStrings
     {
         public string Name { get; set; }
@@ -181,6 +185,7 @@ namespace App2Android
         public List<Battle> Battles;
         public List<Condition> Conditions;
         public List<InventoryCondition> InventoryConditions;
+        public List<ChanceRollBack> ChanceRollBacks;
 
         public Choices()
         {
@@ -206,10 +211,6 @@ namespace App2Android
         public List<EpizodeXML> lstEpizodes { get; set; }
     }
 
-
-
-    
-
     public class Skills
     {
         public string Name { get; set; }
@@ -219,19 +220,29 @@ namespace App2Android
     {
         public string Name { get; set; }
         public int Value { get; set; }
+        public bool IsGreen { get; set; }
+        public bool IsRed { get; set; }
     }
 
-    [Serializable]
-    [XmlRoot("SaveGameData")]
+    //[Serializable]
+    //[XmlRoot("SaveGameData")]
+    //public class SaveGameData
+    //{
+    //    [XmlElement("CurrentEpizode")]
+    //    public int CurrentEpizode { get; set; }
+
+    //    [XmlArray("InventoryList"), XmlArrayItem(typeof(Inventory), ElementName = "Inventory")]
+    //    public List<Inventory> lstInventory { get; set; }
+
+    //    [XmlArray("StatsList"), XmlArrayItem(typeof(PersonStats), ElementName = "Stats")]
+    //    public List<PersonStats> lstStats { get; set; }
+    //}
+
+
     public class SaveGameData
     {
-        [XmlElement("CurrentEpizode")]
         public int CurrentEpizode { get; set; }
-
-        [XmlArray("InventoryList"), XmlArrayItem(typeof(Inventory), ElementName = "Inventory")]
         public List<Inventory> lstInventory { get; set; }
-
-        [XmlArray("StatsList"), XmlArrayItem(typeof(PersonStats), ElementName = "Stats")]
         public List<PersonStats> lstStats { get; set; }
     }
 }
