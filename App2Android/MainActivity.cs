@@ -45,6 +45,8 @@ namespace App2Android
 
         bool isLoadedGame = false;
 
+        List<int> lstEpizodesQueue = new List<int>();
+
         SaveGameData Game;
 
         Game GameSource;
@@ -101,29 +103,8 @@ namespace App2Android
             {
                 return;
             }
-            /////TEst section
-            //LinearLayout layout = FindViewById<LinearLayout>(Resource.Layout.Main);
 
-            //var stats = new LinearLayout(this);
-            //stats.Orientation = Orientation.Horizontal;
-
-            //var scrollView = new ScrollView(this);
-
-            //var aLabel = new TextView(this);
-            ////aLabel.
-            //aLabel.Text = epizode.ID + "\n" + epizode.Text;
-
-            //var aButton = new Button(this);
-            //aButton.Text = "Say Hello!";
-
-            //ImageView ivue = new ImageView(this);
-            //ivue.SetImageBitmap(bmp);
-            //ivue.LayoutParameters = new LinearLayout.LayoutParams( ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
-
-            //aButton.Click += (sender, e) =>
-            //{ aLabel.Text = "Hello Android!"; };          
-
-            /////End of test section
+            
 
             if (this.isLoadedGame == false)
             {
@@ -161,6 +142,8 @@ namespace App2Android
             scroll.AddView(layout);
 
             this.SaveGame("Autosave.xml");
+
+            this.lstEpizodesQueue.Add(EpizodeNumber);
         }
 
         private void PrepareImage(EpizodeXML epizode, LinearLayout lay)
@@ -244,6 +227,16 @@ namespace App2Android
                     label.SetTypeface(Typeface.Default, TypefaceStyle.Bold);
                     txtStats.AddView(label);
                 }
+            }
+
+            if (lstEpizodesQueue.Count > 0)
+            {
+                Button btn = new Button(this);
+                btn.Click += this.ClickBack;
+                btn.Text = "Back";
+                btn.Tag = lstEpizodesQueue.Last();
+                btn.SetTextSize(Android.Util.ComplexUnitType.Dip, 14);
+                txtStats.AddView(btn);
             }
         }
 
@@ -373,7 +366,6 @@ namespace App2Android
             this.PrepareDecisions(epizode, lay);
             this.PrepareChances(epizode, lay);
             this.PrepareBattle(epizode, lay);
-            this.PrepareInventory(epizode, lay);
             this.PrepareConditions(epizode, lay);
         }
 
@@ -387,140 +379,58 @@ namespace App2Android
                 foreach (var pred in predicates)
                 {
                     var type = pred.Type;
-                    if (type == PredicateTypes.eInventory)
+                    var name = pred.Name;
+                    bool aval = pred.IsAvailable;
+                    switch (pred.Type)
                     {
-                        var name = pred.Name;
-
-                        bool aval = pred.IsAvailable;
-
-                        if (aval == true)
-                        {
-                            int qty = pred.Quantity;
-
-                            var inv = this.Game.lstInventory.Find(i => i.Name == name);
-                            if (inv == null || inv.Quantity < qty)
+                        case PredicateTypes.eInventory:
                             {
-                                pass = false;
+                                var inv = this.Game.lstInventory.Find(i => i.Name == name);
+
+                                if (aval == true)
+                                {
+                                    int qty = pred.Quantity;
+
+                                    if (inv == null || inv.Quantity < qty)
+                                    {
+                                        pass = false;
+                                    }
+                                }
+                                else
+                                {
+                                    if (inv != null && inv.Quantity != 0)
+                                    {
+                                        pass = false;
+                                    }
+                                }
+                                break;
                             }
-                        }
-                        else
-                        {
-                            var inv = this.Game.lstInventory.Find(i => i.Name == name);
-                            if (inv != null && inv.Quantity != 0)
+                        case PredicateTypes.eStat:
                             {
-                                pass = false;
+                                var inv = this.Game.lstStats.Find(i => i.Name == name);
+                                int qty = pred.Quantity;
+                                if (aval == true)
+                                {
+                                    if (inv == null || inv.Value < qty)
+                                    {
+                                        pass = false;
+                                    }
+                                }
+                                else
+                                {
+                                    if (inv != null && inv.Value > qty)
+                                    {
+                                        pass = false;
+                                    }
+                                }
+                                break;
                             }
-                        }
                     }
                 }
                 if (pass)
                 {
                     this.CreateButton(cond, lay);
                     break;
-                }
-            }
-        }
-
-        private void PrepareRollBacks(EpizodeXML epizode, LinearLayout lay)
-        {
-            var conditions = epizode.Choices.ChanceRollBacks;
-            foreach (var cond in conditions)
-            {
-                var predicates = cond.Predicates;
-                var pass = true;
-                foreach (var pred in predicates)
-                {
-                    var type = pred.Type;
-                    if (type == PredicateTypes.eInventory)
-                    {
-                        var name = pred.Name;
-
-                        bool aval = pred.IsAvailable;
-
-                        switch(pred.Type)
-                        {
-                            case PredicateTypes.eInventory:
-                                {
-                                    var inv = this.Game.lstInventory.Find(i => i.Name == name);
-
-                                    if (aval == true)
-                                    {
-                                        int qty = pred.Quantity;
-
-                                        if (inv == null || inv.Quantity < qty)
-                                        {
-                                            pass = false;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (inv != null && inv.Quantity != 0)
-                                        {
-                                            pass = false;
-                                        }
-                                    }
-                                    break;
-                                }
-                            case PredicateTypes.eStat:
-                                {
-                                    var inv = this.Game.lstStats.Find(i => i.Name == name);
-                                    int qty = pred.Quantity;
-                                    if (aval == true)
-                                    {
-                                        if (inv == null || inv.Value < qty)
-                                        {
-                                            pass = false;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (inv != null && inv.Value > qty)
-                                        {
-                                            pass = false;
-                                        }
-                                    }
-                                    break;
-                                }
-                        }
-                        
-                    }
-                }
-                if (pass)
-                {
-                    this.CreateRollBackButton(cond, lay);
-                    break;
-                }
-            }
-        }
-
-        private void PrepareInventory(EpizodeXML epizode, LinearLayout lay)
-        {
-            var InventoryConditions = epizode.Choices.InventoryConditions;
-            foreach (var invent in InventoryConditions)
-            {
-                var name = invent.Name;
-                bool aval = invent.IsAvailable;
-
-                if (aval == true)
-                {
-                    int qty = invent.Quantity;
-
-                    var inv = this.Game.lstInventory.Find(i => i.Name == name);
-                    if (inv != null)
-                    {
-                        if (inv.Quantity >= qty)
-                        {
-                            this.CreateButton(invent, lay);
-                        }
-                    }
-                }
-                else
-                {
-                    var inv = this.Game.lstInventory.Find(i => i.Name == name);
-                    if (inv == null || inv.Quantity == 0)
-                    {
-                        this.CreateButton(invent, lay);
-                    }
                 }
             }
         }
@@ -659,6 +569,14 @@ namespace App2Android
         private void Click(object sender, EventArgs e)
         {
             Button b = (Button)sender;
+            ExecuteEpizode((int)b.Tag);
+        }
+
+        private void ClickBack(object sender, EventArgs e)
+        {
+            Button b = (Button)sender;
+            this.lstEpizodesQueue.Remove(lstEpizodesQueue.Last());
+            this.lstEpizodesQueue.Remove(lstEpizodesQueue.Last());
             ExecuteEpizode((int)b.Tag);
         }
 
